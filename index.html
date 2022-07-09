@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- displays site properly based on user's device -->
+
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./images/favicon-32x32.png"
+    />
+
+    <title>Frontend Mentor | Advice generator app</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- // container for advice -->
+    <main id="advice-container">
+      <!-- 
+      // advice id goes here -->
+      <span id ="advice-id"></span>
+
+      <!-- // advice text goes here -->
+      <p id ="advice-text"></p>
+
+      <!-- 
+      //divider -->
+      <div id ="divider">
+        <img src="./images/pattern-divider-desktop.svg" alt="" srcset="" />
+      </div>
+
+      <!-- // dice button -->
+      <button id ="dice-btn">
+        <img src="./images/icon-dice.svg" alt="" srcset="" />
+      </button>
+    </main>
+
+    <script>
+      function getAdvice() {
+        // fetching advice from external api
+        fetch("https://api.adviceslip.com/advice")
+          .then((response) => response.json())
+          .then((data) => {
+            const adviceText = document.getElementById("advice-text");
+            const adviceId = document.getElementById("advice-id");
+
+            adviceText.textContent = `"${data.slip.advice}"`;
+            adviceId.textContent = `ADVICE # ${data.slip.id}`;
+          })
+          .catch((err) => console.log(err));
+      }
+      // fetches advice when page is first loaded
+      getAdvice();
+
+      // selecting dice button
+      const btn = document.querySelector("#dice-btn");
+      // adding click event listener to dice
+      btn.addEventListener("click", getAdvice);
+    </script>
+  </body>
+</html>
